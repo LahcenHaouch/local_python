@@ -1,6 +1,7 @@
 import { default as MonacoEditor } from "@monaco-editor/react";
 
 import { usePyodide } from "./queries";
+import { DEFAULT_CODE } from "./constants";
 
 export default function Editor() {
   const { data: pyodide, isLoading } = usePyodide();
@@ -10,5 +11,5 @@ export default function Editor() {
   }
 
   console.log({ pyodide })
-  return <MonacoEditor height="90vh" defaultLanguage="python" defaultValue="// some comment" theme="vs-dark" />;
+  return <MonacoEditor height="90vh" defaultLanguage="python" defaultValue={DEFAULT_CODE} theme="vs-dark" />;
 }

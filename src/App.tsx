@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Editor from './Editor'
+import './index.css'
 
 const queryClient = new QueryClient();
 

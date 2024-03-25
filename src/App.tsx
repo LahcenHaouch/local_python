@@ -8,8 +8,10 @@ const queryClient = new QueryClient();
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <h1>Local Python</h1>
-      <Editor />
+      <div className="px-10">
+        <h1 className="mt-10 mb-10 text-5xl">Local Python</h1>
+        <Editor />
+      </div>
     </QueryClientProvider>
   )
 }

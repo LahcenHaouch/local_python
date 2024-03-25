@@ -10,6 +10,15 @@ export default function Editor() {
     console.log("Loading...")
   }
 
-  console.log({ pyodide })
-  return <MonacoEditor height="90vh" defaultLanguage="python" defaultValue={DEFAULT_CODE} theme="vs-dark" />;
+  return (
+    <div>
+      <div className="flex justify-end mb-3">
+        <div className="flex gap-4">
+          <button className="bg-zinc-900 py-1 px-4 text-white rounded-lg">Run</button>
+          <button className="py-1 px-4 rounded-lg border-zinc-900 border-2">Copy</button>
+        </div>
+      </div>
+      <MonacoEditor height="50vh" defaultLanguage="python" defaultValue={DEFAULT_CODE} theme="vs-dark" />
+    </div>
+  )
 }

@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { default as MonacoEditor, OnMount } from "@monaco-editor/react";
+import toast from "react-hot-toast";
 
 import { usePyodide } from "./queries";
 import { DEFAULT_CODE } from "./constants";
@@ -63,7 +64,27 @@ export default function Editor() {
   };
 
   const handleCopy = () => {
-    //
+    if (!editorRef.current) {
+      return;
+    }
+
+    const code = editorRef.current.getValue();
+
+    toast.promise(
+      navigator.clipboard.writeText(code),
+      {
+        loading: "Copying...",
+        success: <b>Code copied!</b>,
+        error: <b>Could not copy code.</b>,
+      },
+      {
+        icon: "🐍",
+        style: {
+          backgroundColor: "#1E1E1E",
+          color: "white",
+        },
+      }
+    );
   };
 
   const handleClearLogs = () => setResults([]);

@@ -7,12 +7,13 @@ import { DEFAULT_CODE } from "./constants";
 type Result = {
   id: string;
   msg: string;
+  isStderr: boolean;
+  isError: boolean;
 };
 
 export default function Editor() {
   const editorRef = useRef<any>(null);
   const [results, setResults] = useState<Result[]>([]);
-  const [errors, setErrors] = useState<Result[]>([]);
   const { data: pyodide, isLoading } = usePyodide();
 
   useEffect(() => {
@@ -21,15 +22,15 @@ export default function Editor() {
         batched: (msg: string) =>
           setResults((prevResults) => [
             ...prevResults,
-            { id: crypto.randomUUID(), msg },
+            { id: crypto.randomUUID(), msg, isStderr: false, isError: false },
           ]),
       });
       pyodide.setStderr({
         batched: (msg: string) => {
           console.log("in error", msg);
-          setErrors((prevErrors) => [
-            ...prevErrors,
-            { id: crypto.randomUUID(), msg },
+          setResults((prevResults) => [
+            ...prevResults,
+            { id: crypto.randomUUID(), msg, isStderr: true, isError: false },
           ]);
         },
       });
@@ -45,9 +46,20 @@ export default function Editor() {
       return;
     }
 
-    const value = editorRef.current.getValue();
-
-    pyodide.runPython(value);
+    const code = editorRef.current.getValue();
+    try {
+      pyodide.runPython(code);
+    } catch (error: unknown) {
+      setResults((prevResults) => [
+        ...prevResults,
+        {
+          id: crypto.randomUUID(),
+          msg: (error as Error).message,
+          isError: true,
+          isStderr: false,
+        },
+      ]);
+    }
   };
 
   const handleCopy = () => {
@@ -97,13 +109,15 @@ export default function Editor() {
         <ul>
           {results.map((result) => (
             <li key={result.id}>
-              <span className="text-sky-600 mr-2">$</span>
+              <span className="text-sky-600 mr-2">
+                {result.isStderr
+                  ? "[stderr]:"
+                  : result.isError
+                  ? "[error]"
+                  : ""}
+                $
+              </span>
               {result.msg}
-            </li>
-          ))}
-          {errors.map((error) => (
-            <li key={error.id} className="text-red-700">
-              {error.msg}
             </li>
           ))}
         </ul>

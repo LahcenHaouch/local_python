@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+# 🐍 Local Python
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Local Python project! This project allows you to write and execute Python code directly in your web browser, providing a convenient and lightweight environment for experimenting, testing, and learning Python programming.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Interactive Python Shell**: Write and execute Python code interactively, with immediate feedback.
+- **Syntax Highlighting and Code Completion**: Enhance productivity with syntax highlighting and code completion features.
+- **User-Friendly Interface**: A simple and intuitive interface designed for ease of use.
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Prerequisites
 
-- Configure the top-level `parserOptions` property like this:
+- Web browser (e.g., Chrome, Firefox, Safari)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Installation
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+No installation is required. Simply open the application in your web browser to start using it.
+
+### Usage
+
+1. Open the application in your web browser.
+2. Start typing your Python code in the provided editor.
+3. Press the "Run" button to execute the code.
+4. View the output and any error messages in the console.
+5. Press the "Clear logs" button to (you get the idea).
+6. Press the "Copy" button to copy the code previously written.
+
+## Demo
+
+You can try out a live demo of the application [here](https://lahcenhaouch.github.io/local_python/).
+
+## Contributing
+
+Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.

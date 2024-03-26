@@ -74,7 +74,7 @@ export default function Editor() {
       navigator.clipboard.writeText(code),
       {
         loading: "Copying...",
-        success: <b>Code copied!</b>,
+        success: <b>Code copied to clipboard!</b>,
         error: <b>Could not copy code.</b>,
       },
       {
@@ -87,7 +87,12 @@ export default function Editor() {
     );
   };
 
-  const handleClearLogs = () => setResults([]);
+  const handleClearLogs = () => {
+    if (results.length === 0) {
+      return;
+    }
+    setResults([]);
+  };
 
   const handleEditorDidMount: OnMount = (editor) =>
     (editorRef.current = editor);

@@ -9,7 +9,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="px-10">
-        <h1 className="mt-10 mb-10 text-5xl">Local Python</h1>
+        <h1 className="mt-10 mb-10 text-4xl text-editor">Local Python</h1>
         <Editor />
       </div>
     </QueryClientProvider>

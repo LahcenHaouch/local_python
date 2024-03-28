@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 
-import Editor from "./Editor";
+import { Editor } from "./components";
 import "./index.css";
 
 const queryClient = new QueryClient();

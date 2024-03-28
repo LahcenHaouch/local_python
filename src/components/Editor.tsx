@@ -2,19 +2,15 @@ import { useRef, useState, useEffect } from "react";
 import { default as MonacoEditor, OnMount } from "@monaco-editor/react";
 import toast from "react-hot-toast";
 
-import { usePyodide } from "./queries";
-import { DEFAULT_CODE } from "./constants";
+import { usePyodide } from "../queries";
+import { DEFAULT_CODE } from "../constants";
 
-type Result = {
-  id: string;
-  msg: string;
-  isStderr: boolean;
-  isError: boolean;
-};
+import { ExecutionResult } from "./types";
+import ExecutionMessage from "./ExecutionMessage";
 
 export default function Editor() {
   const editorRef = useRef<any>(null);
-  const [results, setResults] = useState<Result[]>([]);
+  const [results, setResults] = useState<ExecutionResult[]>([]);
   const { data: pyodide, isLoading } = usePyodide();
 
   useEffect(() => {
@@ -23,15 +19,14 @@ export default function Editor() {
         batched: (msg: string) =>
           setResults((prevResults) => [
             ...prevResults,
-            { id: crypto.randomUUID(), msg, isStderr: false, isError: false },
+            { id: crypto.randomUUID(), msg, output: "stdout" },
           ]),
       });
       pyodide.setStderr({
         batched: (msg: string) => {
-          console.log("in error", msg);
           setResults((prevResults) => [
             ...prevResults,
-            { id: crypto.randomUUID(), msg, isStderr: true, isError: false },
+            { id: crypto.randomUUID(), msg, output: "stderr" },
           ]);
         },
       });
@@ -56,8 +51,7 @@ export default function Editor() {
         {
           id: crypto.randomUUID(),
           msg: (error as Error).message,
-          isError: true,
-          isStderr: false,
+          output: "error",
         },
       ]);
     }
@@ -135,15 +129,7 @@ export default function Editor() {
         <ul>
           {results.map((result) => (
             <li key={result.id}>
-              <span className="text-sky-600 mr-2">
-                {result.isStderr
-                  ? "[stderr]:"
-                  : result.isError
-                  ? "[error]"
-                  : ""}
-                $
-              </span>
-              {result.msg}
+              <ExecutionMessage result={result} />
             </li>
           ))}
         </ul>

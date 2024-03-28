@@ -96,8 +96,9 @@ export default function Editor() {
       <div className="flex justify-end mb-3">
         <div className="flex gap-4">
           <button
-            className="bg-editor py-1 px-4 text-white rounded-lg"
+            className="bg-editor py-1 px-4 text-white disabled:bg-gray-300 disabled:text-black disabled:cursor-not-allowed rounded-lg"
             onClick={handleRun}
+            disabled={isLoading}
           >
             Run
           </button>

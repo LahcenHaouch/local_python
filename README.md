@@ -29,6 +29,8 @@ No installation is required. Simply open the application in your web browser to 
 
 ## Demo
 
+![caption](./local_python.gif)
+
 You can try out a live demo of the application [here](https://lahcenhaouch.github.io/local_python/).
 
 ## Contributing

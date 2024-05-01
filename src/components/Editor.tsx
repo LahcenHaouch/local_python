@@ -160,7 +160,7 @@ export default function Editor() {
           className="py-1 px-4 rounded-lg border-editor border-2"
           onClick={handleClearLogs}
         >
-          Clear logs
+          Clear
         </button>
         <button
           className="py-1 px-4 rounded-lg border-editor border-2"

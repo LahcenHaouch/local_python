@@ -57,7 +57,15 @@ export default function Editor() {
     }
   };
 
-  const handleCopy = () => {
+  const handleReset = () => {
+    if (!editorRef.current) {
+      return;
+    }
+
+    editorRef.current.setValue(DEFAULT_CODE);
+  };
+
+  const handleCopyCode = () => {
     if (!editorRef.current) {
       return;
     }
@@ -81,6 +89,26 @@ export default function Editor() {
     );
   };
 
+  const handleCopyLogs = () => {
+    toast.promise(
+      navigator.clipboard.writeText(
+        results.map((result) => result.msg).join("\n")
+      ),
+      {
+        loading: "Copying...",
+        success: <b>Logs copied to clipboard!</b>,
+        error: <b>Could not copy logs.</b>,
+      },
+      {
+        icon: "🪬",
+        style: {
+          backgroundColor: "#1E1E1E",
+          color: "white",
+        },
+      }
+    );
+  };
+
   const handleClearLogs = () => {
     if (results.length === 0) {
       return;
@@ -93,7 +121,16 @@ export default function Editor() {
 
   return (
     <div>
-      <div className="flex justify-end mb-3">
+      <div className="flex justify-between mb-3">
+        <div>
+          <button
+            className="py-1 px-4 rounded-lg border-editor border-2"
+            onClick={handleReset}
+            disabled={isLoading}
+          >
+            Reset
+          </button>
+        </div>
         <div className="flex gap-4">
           <button
             className="bg-editor py-1 px-4 text-white disabled:bg-gray-300 disabled:text-black disabled:cursor-not-allowed rounded-lg"
@@ -104,7 +141,7 @@ export default function Editor() {
           </button>
           <button
             className="py-1 px-4 rounded-lg border-editor border-2"
-            onClick={handleCopy}
+            onClick={handleCopyCode}
           >
             Copy
           </button>
@@ -118,12 +155,18 @@ export default function Editor() {
         theme="vs-dark"
         onMount={handleEditorDidMount}
       />
-      <div className="flex justify-end mb-3">
+      <div className="flex justify-end mb-3 gap-4">
         <button
           className="py-1 px-4 rounded-lg border-editor border-2"
           onClick={handleClearLogs}
         >
           Clear logs
+        </button>
+        <button
+          className="py-1 px-4 rounded-lg border-editor border-2"
+          onClick={handleCopyLogs}
+        >
+          Copy
         </button>
       </div>
       <div className="bg-editor text-white h-60 p-4 overflow-y-scroll resize-y">
